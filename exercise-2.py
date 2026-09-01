@@ -12,13 +12,7 @@ def _():
 
     import torch as torch
 
-    return (
-        AutoImageProcessor,
-        AutoModelForImageClassification,
-        Image,
-        display,
-        torch,
-    )
+    return AutoImageProcessor, AutoModelForImageClassification, Image, torch
 
 
 @app.cell
@@ -38,16 +32,15 @@ def _(AutoImageProcessor, AutoModelForImageClassification):
 
 
 @app.cell
-def _(Image, display, model, path_img, processor, torch):
+def _(Image, model, path_img, processor, torch):
     # Open a local image of a plant specimen
-    # true positive: 'BM000521866.jpg', 'bad.jpg'
-    # true negative: '270005.jpg' 
-    # false positive: '196181.jpg'
-    # false negative: '269465.jpg'
+    # true positive: '1.jpg', '2.jpg'
+    # true negative: '3.jpg' 
+    # false positive: '4.jpg', 'poaceae.jpg'
+    # false negative: '5.jpg'
 
-    file_img = 'bad.jpg' 
+    file_img = '1.jpg' 
     image = Image.open(path_img + file_img)
-    display(image, height= 300)
 
     # Prepare inputs and run inference
     inputs = processor(images=image, return_tensors="pt")
@@ -59,9 +52,7 @@ def _(Image, display, model, path_img, processor, torch):
     print(f"Flower: {flower_prob:.3f}")
     # print(f"Fruit:  {fruit_prob:.3f}")
 
-    # test on weird plants with flowers:
-    # can detect flower:  'Welwitschia mirabilis.jpg', 'Pleurothallis-truncata.jpg'
-    # cannot detect flower: 'Picture2.jpg'
+    # display(image)
     return
 
 
